@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
 import Text from "./Text"
-import { primary, white, black } from "../config/color"
+import { primary } from "../config/color"
 
 export default () => {
   return (
