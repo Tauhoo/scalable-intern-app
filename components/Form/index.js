@@ -6,45 +6,58 @@ import TextInput from "../TextInput"
 import { nameValidator } from "./validator"
 import DateInput from "../DateInput"
 import OptionInput from "../OptionInput"
+import Button from "../Button"
 import { careers, bank } from "../../config/form"
+import { connect } from "react-redux"
 
-export default () => {
+const Form = ({ data }) => {
+  const onSubmit = () => {
+    console.log(data)
+  }
   return (
     <Card>
       <Text style={styles.topic}>Register</Text>
       <TextInput
         placeholder='firstname'
-        onChange={(val) => console.log(val)}
         containerStyle={styles.textInput}
         checker={nameValidator("firstname")}
+        index='firstname'
       ></TextInput>
       <TextInput
         placeholder='lastname'
-        onChange={(val) => console.log(val)}
         containerStyle={styles.textInput}
         checker={nameValidator("lastname")}
+        index='lastname'
       ></TextInput>
-      <DateInput
-        containerStyle={styles.textInput}
-        onChange={(val) => console.log(val)}
-      ></DateInput>
+      <DateInput containerStyle={styles.textInput} index='birtday'></DateInput>
       <OptionInput
         topic='career'
         options={careers}
         style={styles.textInput}
-        onChange={(val) => console.log(val)}
+        index='career'
       ></OptionInput>
       <TextInput
-        placeholder='bank id'
-        onChange={(val) => console.log(val)}
+        placeholder='income'
+        indexboardType='number-pad'
         containerStyle={styles.textInput}
+        index='income'
+      ></TextInput>
+      <TextInput
+        placeholder='bank id'
+        containerStyle={styles.textInput}
+        index='bankId'
       ></TextInput>
       <OptionInput
         topic='bank'
         options={bank}
         style={styles.textInput}
-        onChange={(val) => console.log(val)}
+        index='bank'
       ></OptionInput>
+      <Button
+        containerStyle={styles.textInput}
+        onClick={onSubmit}
+        title='submit'
+      ></Button>
     </Card>
   )
 }
@@ -57,3 +70,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
 })
+
+const mapStateToProps = ({ formReducer }) => ({ data: formReducer })
+
+export default connect(mapStateToProps)(Form)

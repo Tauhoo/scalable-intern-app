@@ -4,14 +4,17 @@ import DatePicker from "react-native-datepicker"
 import moment from "moment"
 import { gray } from "../config/color"
 
-export default ({ onChange, containerStyle }) => {
+import { setFormField } from "../store/actions/form"
+import { connect } from "react-redux"
+
+const DateInput = ({ updateField, containerStyle, formReducer, index }) => {
+  const { value } = formReducer[index]
+
   const today = moment(new Date()).format("DD-MM-YYYY")
   const [active, setActive] = useState(false)
-  const [currentDate, setDate] = useState(today)
 
   const onChangeHandler = (data) => {
-    setDate(data)
-    onChange(data)
+    updateField(index, { value: data })
   }
 
   return (
@@ -19,7 +22,7 @@ export default ({ onChange, containerStyle }) => {
       {active ? <Text style={styles.topic}>birtday</Text> : null}
       <DatePicker
         style={{ width: "100%" }}
-        date={currentDate}
+        date={value}
         mode='date'
         placeholder='select birthday'
         format='DD-MM-YYYY'
@@ -56,3 +59,11 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
   },
 })
+
+const mapStateToProps = ({ formReducer }) => ({ formReducer })
+
+const mapDispatchToProps = (dispatch) => ({
+  updateField: (key, load) => dispatch(setFormField(key, load)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DateInput)

@@ -2,41 +2,46 @@ import React, { useState } from "react"
 import { StyleSheet, TextInput, View, Text } from "react-native"
 import { gray } from "../config/color"
 
-export default ({
+import { setFormField } from "../store/actions/form"
+import { connect } from "react-redux"
+
+const TextInputComponent = ({
   style,
   placeholder,
-  onChange,
   password,
   checker,
   containerStyle,
+  keyboardType,
+  updateField,
+  index,
+  formReducer,
 }) => {
+  const { isValid, notificate } = formReducer[index]
+
   const [isFocus, setFocus] = useState(false)
-  const [noti, setNoti] = useState("")
-  const [valid, setValid] = useState(true)
 
   const onChangeValue = ({ nativeEvent }) => {
     const { text } = nativeEvent
-    if (!onChange) return
     if (checker) {
-      const { isValid, notificate } = checker(text)
-      if (isValid) {
-        setNoti("")
-        setValid(true)
-        return onChange(text)
-      } else {
-        setNoti(notificate)
-        setValid(false)
-        return
-      }
+      const result = checker(text)
+      updateField(index, {
+        isValid: result.isValid,
+        notificate: result.isValid ? "" : result.notificate,
+        value: text,
+      })
+    } else {
+      updateField(index, {
+        value: text,
+      })
     }
-
-    onChange(text)
   }
+
   return (
     <View style={{ ...styles.container, ...containerStyle }}>
       {isFocus ? <Text style={styles.placeholder}>{placeholder}</Text> : null}
-      {valid ? null : <Text style={styles.notificate}>{noti}</Text>}
+      {isValid ? null : <Text style={styles.notificate}>{notificate}</Text>}
       <TextInput
+        keyboardType={keyboardType}
         onChange={onChangeValue}
         secureTextEntry={password}
         placeholder={placeholder}
@@ -59,3 +64,11 @@ const styles = StyleSheet.create({
   placeholder: { fontSize: 12, marginBottom: 8, color: "#2c3e50" },
   notificate: { color: "#c0392b", marginBottom: 8 },
 })
+
+const mapStateToProps = ({ formReducer }) => ({ formReducer })
+
+const mapDispatchToProps = (dispatch) => ({
+  updateField: (key, load) => dispatch(setFormField(key, load)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextInputComponent)
