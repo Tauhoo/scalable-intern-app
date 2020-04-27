@@ -9,6 +9,11 @@ export default ({ onChange, containerStyle }) => {
   const [active, setActive] = useState(false)
   const [currentDate, setDate] = useState(today)
 
+  const onChangeHandler = (data) => {
+    setDate(data)
+    onChange(data)
+  }
+
   return (
     <View style={{ ...styles.container, ...containerStyle }}>
       {active ? <Text style={styles.topic}>birtday</Text> : null}
@@ -30,7 +35,7 @@ export default ({ onChange, containerStyle }) => {
             borderWidth: 0,
           },
         }}
-        onDateChange={(date) => setDate(date)}
+        onDateChange={onChangeHandler}
         onOpenModal={() => setActive(true)}
         onCloseModal={() => setActive(false)}
       />
@@ -48,5 +53,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     fontSize: 12,
+    color: "#2c3e50",
   },
 })

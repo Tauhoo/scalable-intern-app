@@ -5,6 +5,8 @@ import Text from "../Text"
 import TextInput from "../TextInput"
 import { nameValidator } from "./validator"
 import DateInput from "../DateInput"
+import OptionInput from "../OptionInput"
+import { careers } from "../../config/form"
 
 export default () => {
   return (
@@ -22,7 +24,15 @@ export default () => {
         containerStyle={styles.textInput}
         checker={nameValidator("lastname")}
       ></TextInput>
-      <DateInput containerStyle={styles.textInput}></DateInput>
+      <DateInput
+        containerStyle={styles.textInput}
+        onChange={(val) => console.log(val)}
+      ></DateInput>
+      <OptionInput
+        options={careers}
+        style={styles.textInput}
+        onChange={(val) => console.log(val)}
+      ></OptionInput>
     </Card>
   )
 }
