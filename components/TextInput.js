@@ -2,7 +2,14 @@ import React, { useState } from "react"
 import { StyleSheet, TextInput, View, Text } from "react-native"
 import { gray } from "../config/color"
 
-export default ({ style, placeholder, onChange, password, checker }) => {
+export default ({
+  style,
+  placeholder,
+  onChange,
+  password,
+  checker,
+  containerStyle,
+}) => {
   const [isFocus, setFocus] = useState(false)
   const [noti, setNoti] = useState("")
   const [valid, setValid] = useState(true)
@@ -19,18 +26,14 @@ export default ({ style, placeholder, onChange, password, checker }) => {
       } else {
         setNoti(notificate)
         setValid(false)
-        console.log("wrong")
-
         return
       }
     }
 
     onChange(text)
   }
-  console.log("noti", noti)
-
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...containerStyle }}>
       {isFocus ? <Text style={styles.placeholder}>{placeholder}</Text> : null}
       {valid ? null : <Text style={styles.notificate}>{noti}</Text>}
       <TextInput
