@@ -6,7 +6,7 @@ import TextInput from "../TextInput"
 import { nameValidator } from "./validator"
 import DateInput from "../DateInput"
 import OptionInput from "../OptionInput"
-import { careers } from "../../config/form"
+import { careers, bank } from "../../config/form"
 
 export default () => {
   return (
@@ -29,7 +29,19 @@ export default () => {
         onChange={(val) => console.log(val)}
       ></DateInput>
       <OptionInput
+        topic='career'
         options={careers}
+        style={styles.textInput}
+        onChange={(val) => console.log(val)}
+      ></OptionInput>
+      <TextInput
+        placeholder='bank id'
+        onChange={(val) => console.log(val)}
+        containerStyle={styles.textInput}
+      ></TextInput>
+      <OptionInput
+        topic='bank'
+        options={bank}
         style={styles.textInput}
         onChange={(val) => console.log(val)}
       ></OptionInput>

@@ -3,7 +3,7 @@ import SelectInput from "react-native-select-input-ios"
 import { View, StyleSheet, Text } from "react-native"
 import { gray } from "../config/color"
 import { normalSize } from "../config/font"
-export default ({ options, style, onChange }) => {
+export default ({ options, style, onChange, topic }) => {
   const [active, setActive] = useState(false)
   const [value, setValue] = useState(0)
   const submitHandler = (value) => {
@@ -13,7 +13,7 @@ export default ({ options, style, onChange }) => {
   }
   return (
     <View style={{ ...styles.container, ...style }}>
-      {active ? <Text style={styles.topic}>career</Text> : null}
+      {active ? <Text style={styles.topic}>{topic}</Text> : null}
       <SelectInput
         value={value}
         options={options}
