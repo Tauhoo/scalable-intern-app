@@ -1,16 +1,17 @@
 import React from "react"
 import { View, Text, Button } from "react-native"
 import setupLink from "../libs/setupLink"
+import Container from "../components/Container"
 
-const Butt = setupLink(({ currentPage, goto, title }) => (
+const Butt = setupLink(({ goto, title }) => (
   <Button onPress={() => goto("register")} title={title} />
 ))
 
 export default () => {
   return (
-    <View>
+    <Container>
       <Text>index</Text>
       <Butt title='ice'></Butt>
-    </View>
+    </Container>
   )
 }
