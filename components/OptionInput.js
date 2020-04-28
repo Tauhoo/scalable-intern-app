@@ -3,13 +3,16 @@ import SelectInput from "react-native-select-input-ios"
 import { View, StyleSheet, Text } from "react-native"
 import { gray } from "../config/color"
 import { normalSize } from "../config/font"
-export default ({ options, style, onChange, topic }) => {
+
+import { setFormField } from "../store/actions/form"
+import { connect } from "react-redux"
+
+const Option = ({ options, style, topic, formReducer, updateField, index }) => {
+  const { value } = formReducer[index]
   const [active, setActive] = useState(false)
-  const [value, setValue] = useState(0)
-  const submitHandler = (value) => {
-    setValue(value)
+  const submitHandler = (newValue) => {
+    updateField(index, { value: newValue })
     setActive(false)
-    onChange(value)
   }
   return (
     <View style={{ ...styles.container, ...style }}>
@@ -43,3 +46,11 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
   },
 })
+
+const mapStateToProps = ({ formReducer }) => ({ formReducer })
+
+const mapDispatchToProps = (dispatch) => ({
+  updateField: (key, load) => dispatch(setFormField(key, load)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Option)

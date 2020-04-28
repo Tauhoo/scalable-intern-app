@@ -3,16 +3,24 @@ import { StyleSheet } from "react-native"
 import Card from "../Card"
 import Text from "../Text"
 import TextInput from "../TextInput"
-import { nameValidator } from "./validator"
+import {
+  nameValidator,
+  validateForm,
+  incomeValidator,
+  bankIdValidator,
+} from "./validator"
 import DateInput from "../DateInput"
 import OptionInput from "../OptionInput"
 import Button from "../Button"
 import { careers, bank } from "../../config/form"
+
+import { setFormField } from "../../store/actions/form"
 import { connect } from "react-redux"
 
-const Form = ({ data }) => {
+const Form = ({ data, updateField }) => {
   const onSubmit = () => {
-    console.log(data)
+    const isValid = validateForm(data, updateField)
+    console.log(isValid)
   }
   return (
     <Card>
@@ -41,10 +49,12 @@ const Form = ({ data }) => {
         indexboardType='number-pad'
         containerStyle={styles.textInput}
         index='income'
+        checker={incomeValidator}
       ></TextInput>
       <TextInput
         placeholder='bank id'
         containerStyle={styles.textInput}
+        checker={bankIdValidator}
         index='bankId'
       ></TextInput>
       <OptionInput
@@ -72,5 +82,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = ({ formReducer }) => ({ data: formReducer })
+const mapDispatchToProps = (dispatch) => ({
+  updateField: (key, load) => dispatch(setFormField(key, load)),
+})
 
-export default connect(mapStateToProps)(Form)
+export default connect(mapStateToProps, mapDispatchToProps)(Form)
