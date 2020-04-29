@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import Navbar from "./components/Navbar"
 import PageRouter from "./components/PagesRouter"
@@ -6,7 +6,13 @@ import KeyCancellator from "./components/KeyCancellator"
 import { gray } from "./config/color"
 import Store from "./store"
 
+import socketGenerator from "./libs/socket"
+
 export default function App() {
+  useEffect(() => {
+    const socket = socketGenerator.getInstance()
+    return socket.destroy
+  })
   return (
     <Store>
       <KeyCancellator>

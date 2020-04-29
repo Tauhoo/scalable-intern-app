@@ -12,15 +12,20 @@ import {
 import DateInput from "../DateInput"
 import OptionInput from "../OptionInput"
 import Button from "../Button"
+import Link from "../Link"
 import { careers, bank } from "../../config/form"
 
 import { setFormField } from "../../store/actions/form"
 import { connect } from "react-redux"
+import socketGenerator from "../../libs/socket"
 
 const Form = ({ data, updateField }) => {
   const onSubmit = () => {
     const isValid = validateForm(data, updateField)
-    console.log(isValid)
+    if (!isValid) return
+    const socket = socketGenerator.getInstance()
+    const status = socket.emitEvent("register", JSON.stringify(data))
+    console.log(status)
   }
   return (
     <Card>
@@ -68,6 +73,12 @@ const Form = ({ data, updateField }) => {
         onClick={onSubmit}
         title='submit'
       ></Button>
+      <Link src='index'>
+        <Button
+          title='cancel'
+          containerStyle={styles.cancelButtonContainer}
+        ></Button>
+      </Link>
     </Card>
   )
 }
@@ -77,6 +88,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   textInput: {
+    marginVertical: 5,
+  },
+  cancelButtonContainer: {
+    backgroundColor: "#e74c3c",
     marginVertical: 5,
   },
 })

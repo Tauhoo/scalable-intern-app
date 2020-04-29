@@ -2,11 +2,11 @@ import React from "react"
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 import { primary, white } from "../config/color"
 
-export default ({ title, containerStyle, onClick }) => {
+export default ({ title, containerStyle, onClick, textStyle }) => {
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={onClick}>
       <View style={{ ...styles.container, ...containerStyle }}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={{ ...styles.title, ...textStyle }}>{title}</Text>
       </View>
     </TouchableOpacity>
   )

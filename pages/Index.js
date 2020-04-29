@@ -1,17 +1,28 @@
 import React from "react"
-import { Text, Button } from "react-native"
-import setupLink from "../libs/setupLink"
+import { StyleSheet } from "react-native"
+import Button from "../components/Button"
+import Link from "../components/Link"
 import Container from "../components/Container"
-
-const Butt = setupLink(({ goto, title }) => (
-  <Button onPress={() => goto("register")} title={title} />
-))
+import Card from "../components/Card"
+import Text from "../components/Text"
 
 export default () => {
   return (
     <Container>
-      <Text>index</Text>
-      <Butt title='ice'></Butt>
+      <Card>
+        <Text topic style={styles.topic}>
+          We will never walk alone.
+        </Text>
+        <Link src='register'>
+          <Button title='register' />
+        </Link>
+      </Card>
     </Container>
   )
 }
+
+const styles = StyleSheet.create({
+  topic: {
+    marginVertical: 10,
+  },
+})
