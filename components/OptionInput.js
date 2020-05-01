@@ -4,16 +4,14 @@ import { View, StyleSheet, Text } from "react-native"
 import { gray } from "../config/color"
 import { normalSize } from "../config/font"
 
-import { setFormField } from "../store/actions/form"
-import { connect } from "react-redux"
-
-const Option = ({ options, style, topic, formReducer, updateField, index }) => {
-  const { value } = formReducer[index]
+export default ({ options, style, topic, value, onChange }) => {
   const [active, setActive] = useState(false)
-  const submitHandler = (newValue) => {
-    updateField(index, { value: newValue })
+
+  const onChangeOption = (value) => {
+    onChange(value)
     setActive(false)
   }
+
   return (
     <View style={{ ...styles.container, ...style }}>
       {active ? <Text style={styles.topic}>{topic}</Text> : null}
@@ -23,7 +21,7 @@ const Option = ({ options, style, topic, formReducer, updateField, index }) => {
         labelStyle={styles.label}
         onBeginEditing={() => setActive(true)}
         onEndEditing={() => setActive(false)}
-        onSubmitEditing={submitHandler}
+        onSubmitEditing={onChangeOption}
         onEndEditing={() => setActive(false)}
       />
     </View>
@@ -46,11 +44,3 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
   },
 })
-
-const mapStateToProps = ({ formReducer }) => ({ formReducer })
-
-const mapDispatchToProps = (dispatch) => ({
-  updateField: (key, load) => dispatch(setFormField(key, load)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Option)

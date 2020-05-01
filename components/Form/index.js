@@ -21,52 +21,83 @@ import socketGenerator from "../../libs/socket"
 
 const Form = ({ data, updateField }) => {
   const onSubmit = () => {
+    console.log(data)
     const isValid = validateForm(data, updateField)
     if (!isValid) return
     const socket = socketGenerator.getInstance()
     const status = socket.emitEvent("register", JSON.stringify(data))
-    console.log(status)
   }
+
+  const onChangeText = (checker, index) => ({ nativeEvent }) => {
+    const { text } = nativeEvent
+    if (checker) {
+      const result = checker(text)
+      updateField(index, {
+        isValid: result.isValid,
+        notificate: result.isValid ? "" : result.notificate,
+        value: text,
+      })
+    } else {
+      updateField(index, {
+        value: text,
+      })
+    }
+  }
+
+  const onChangeDate = (data) => {
+    updateField("birtday", { value: data })
+  }
+
+  const onChangeOption = (index) => (newValue) => {
+    updateField(index, { value: newValue })
+  }
+
   return (
     <Card>
       <Text style={styles.topic}>Register</Text>
       <TextInput
         placeholder='firstname'
         containerStyle={styles.textInput}
-        checker={nameValidator("firstname")}
-        index='firstname'
+        onChange={onChangeText(nameValidator("firstname"), "firstname")}
+        value={data.firstname}
       ></TextInput>
       <TextInput
         placeholder='lastname'
         containerStyle={styles.textInput}
-        checker={nameValidator("lastname")}
-        index='lastname'
+        onChange={onChangeText(nameValidator("lastname"), "lastname")}
+        value={data.lastname}
       ></TextInput>
-      <DateInput containerStyle={styles.textInput} index='birtday'></DateInput>
+      <DateInput
+        containerStyle={styles.textInput}
+        onChange={onChangeDate}
+        value={data.birtday.value}
+      ></DateInput>
       <OptionInput
         topic='career'
         options={careers}
         style={styles.textInput}
-        index='career'
+        value={data.career.value}
+        onChange={onChangeOption("career")}
       ></OptionInput>
       <TextInput
         placeholder='income'
         indexboardType='number-pad'
         containerStyle={styles.textInput}
-        index='income'
-        checker={incomeValidator}
+        onChange={onChangeText(incomeValidator, "income")}
+        value={data.income}
       ></TextInput>
       <TextInput
         placeholder='bank id'
         containerStyle={styles.textInput}
-        checker={bankIdValidator}
-        index='bankId'
+        onChange={onChangeText(bankIdValidator, "bankId")}
+        value={data.bankId}
       ></TextInput>
       <OptionInput
         topic='bank'
         options={bank}
         style={styles.textInput}
-        index='bank'
+        value={data.bank.value}
+        onChange={onChangeOption("bank")}
       ></OptionInput>
       <Button
         containerStyle={styles.textInput}

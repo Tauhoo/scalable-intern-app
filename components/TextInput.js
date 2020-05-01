@@ -2,47 +2,26 @@ import React, { useState } from "react"
 import { StyleSheet, TextInput, View, Text } from "react-native"
 import { gray } from "../config/color"
 
-import { setFormField } from "../store/actions/form"
-import { connect } from "react-redux"
-
-const TextInputComponent = ({
+export default ({
   style,
   placeholder,
   password,
-  checker,
   containerStyle,
   keyboardType,
-  updateField,
-  index,
-  formReducer,
+  value,
+  onChange,
 }) => {
-  const { isValid, notificate } = formReducer[index]
-
   const [isFocus, setFocus] = useState(false)
-
-  const onChangeValue = ({ nativeEvent }) => {
-    const { text } = nativeEvent
-    if (checker) {
-      const result = checker(text)
-      updateField(index, {
-        isValid: result.isValid,
-        notificate: result.isValid ? "" : result.notificate,
-        value: text,
-      })
-    } else {
-      updateField(index, {
-        value: text,
-      })
-    }
-  }
 
   return (
     <View style={{ ...styles.container, ...containerStyle }}>
       {isFocus ? <Text style={styles.placeholder}>{placeholder}</Text> : null}
-      {isValid ? null : <Text style={styles.notificate}>{notificate}</Text>}
+      {value.isValid ? null : (
+        <Text style={styles.notificate}>{value.notificate}</Text>
+      )}
       <TextInput
         keyboardType={keyboardType}
-        onChange={onChangeValue}
+        onChange={onChange}
         secureTextEntry={password}
         placeholder={placeholder}
         style={{ ...styles.input, ...style }}
@@ -64,11 +43,3 @@ const styles = StyleSheet.create({
   placeholder: { fontSize: 12, marginBottom: 8, color: "#2c3e50" },
   notificate: { color: "#c0392b", marginBottom: 8 },
 })
-
-const mapStateToProps = ({ formReducer }) => ({ formReducer })
-
-const mapDispatchToProps = (dispatch) => ({
-  updateField: (key, load) => dispatch(setFormField(key, load)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(TextInputComponent)
