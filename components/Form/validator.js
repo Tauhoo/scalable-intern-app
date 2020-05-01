@@ -34,6 +34,7 @@ export const validateForm = (formData, updateField) => {
 
   // firstname
   const firstnameValidate = nameValidator("firstname")(firstname.value)
+
   if (!firstnameValidate.isValid) {
     updateField("firstname", firstnameValidate)
     return false

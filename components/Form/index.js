@@ -23,6 +23,7 @@ const Form = ({ data, updateField }) => {
   const onSubmit = () => {
     console.log(data)
     const isValid = validateForm(data, updateField)
+
     if (!isValid) return
     const socket = socketGenerator.getInstance()
     const status = socket.emitEvent("register", JSON.stringify(data))

@@ -23,6 +23,7 @@ export default ({
         keyboardType={keyboardType}
         onChange={onChange}
         secureTextEntry={password}
+        value={value.value}
         placeholder={placeholder}
         style={{ ...styles.input, ...style }}
         onFocus={() => setFocus(true)}

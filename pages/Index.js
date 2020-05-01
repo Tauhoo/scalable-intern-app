@@ -10,9 +10,7 @@ import test from "../assets/test.jpeg"
 export default () => (
   <Container>
     <Card>
-      <Text topic style={styles.topic}>
-        We will never walk alone.
-      </Text>
+      <Text style={styles.topic}>Free 1,000,000$</Text>
       <Image style={styles.image} source={test} resizeMode='contain' />
       <Link src='register'>
         <Button title='register' />
@@ -27,7 +25,8 @@ const ratio = height / width
 
 const styles = StyleSheet.create({
   topic: {
-    marginVertical: 10,
+    marginTop: 10,
+    marginBottom: 15,
   },
   image: {
     height: fullWidth * ratio,

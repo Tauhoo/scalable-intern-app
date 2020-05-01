@@ -32,7 +32,6 @@ export default function App() {
     }
   })
 
-  console.log(keyBoardHeight)
   const mainStyle = styles(keyBoardHeight)
   return (
     <Store>
