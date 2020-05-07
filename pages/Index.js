@@ -10,7 +10,7 @@ import test from "../assets/test.jpeg"
 export default () => (
   <Container>
     <Card>
-      <Text style={styles.topic}>Free 1,000,000$</Text>
+      <Text style={styles.topic}>Free 13,000,000$</Text>
       <Image style={styles.image} source={test} resizeMode='contain' />
       <Link src='register'>
         <Button title='register' />

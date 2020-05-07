@@ -3,6 +3,7 @@ import { StyleSheet, Keyboard, ScrollView, View } from "react-native"
 import Navbar from "./components/Navbar"
 import PageRouter from "./components/PagesRouter"
 import KeyCancellator from "./components/KeyCancellator"
+import Modal from "./components/Modal"
 import { gray } from "./config/color"
 import Store from "./store"
 
@@ -36,11 +37,13 @@ export default function App() {
   return (
     <Store>
       <KeyCancellator>
-        <ScrollView style={mainStyle.container}>
-          <Navbar></Navbar>
-          <PageRouter></PageRouter>
-          <View style={mainStyle.keyBoard} />
-        </ScrollView>
+        <Modal>
+          <ScrollView style={mainStyle.container}>
+            <Navbar></Navbar>
+            <PageRouter></PageRouter>
+            <View style={mainStyle.keyBoard} />
+          </ScrollView>
+        </Modal>
       </KeyCancellator>
     </Store>
   )

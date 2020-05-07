@@ -8,7 +8,10 @@ class Socket {
   }
 
   createSocket = () => {
-    this.socket = io(socketLocation)
+    this.socket = io(socketLocation, socketOptions)
+    this.socket.on("reconnect_attempt", () => {
+      this.socket.io.opts.transports = ["polling", "websocket"]
+    })
     this.socket.on("connect", this.onConnect)
     this.socket.on("disconnect", this.onDisconnect)
     this.socket.on("notification", this.onNotificateEvent)
