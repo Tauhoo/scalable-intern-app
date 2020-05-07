@@ -1,6 +1,6 @@
 import io from "socket.io-client"
 import { socketLocation, socketOptions } from "../config/network"
-import { Alert } from "react-native"
+import Modal from "../components/Modal"
 
 class Socket {
   constructor() {
@@ -9,48 +9,29 @@ class Socket {
 
   createSocket = () => {
     this.socket = io(socketLocation, socketOptions)
-    this.socket.on("reconnect_attempt", () => {
-      this.socket.io.opts.transports = ["polling", "websocket"]
-    })
-    this.socket.on("connect", this.onConnect)
-    this.socket.on("disconnect", this.onDisconnect)
-    this.socket.on("notification", this.onNotificateEvent)
+    this.socket.on("NOTIFICATE", this.onNotificateEvent)
   }
 
   destroy = () => {
+    console.log("destroy")
+
     this.socket.removeAllListeners()
     this.socket.off()
     this.socket.disconnect()
   }
 
-  onDisconnect = () => {
-    console.log("disconnect")
+  setOnDisconnect = (onDisconnect) => {
+    this.socket.on("disconnect", onDisconnect)
   }
 
-  onConnect = () => {
-    console.log("connect")
+  setOnConnect = (onConnect) => {
+    this.socket.on("connect", onConnect)
   }
 
   getConnectStatus = () => this.socket.connected
 
   onNotificateEvent = (data) => {
-    console.log(data)
-
-    const { title, detail } = data
-    console.log(title, detail)
-
-    Alert.alert(
-      title,
-      detail,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        { text: "OK" },
-      ],
-      { cancelable: false }
-    )
+    Modal.popup(data)
   }
 
   emitEvent = (event, data) => {

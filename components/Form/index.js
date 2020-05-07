@@ -13,8 +13,8 @@ import DateInput from "../DateInput"
 import OptionInput from "../OptionInput"
 import Button from "../Button"
 import Link from "../Link"
+import { convertStateToData } from "../../libs/form"
 import { careers, bank } from "../../config/form"
-import Modal from "../Modal"
 
 import { setFormField } from "../../store/actions/form"
 import { connect } from "react-redux"
@@ -25,8 +25,9 @@ const Form = ({ data, updateField }) => {
   const onSubmit = () => {
     const isValid = validateForm(data, updateField)
     if (!isValid) return
+    const packet = convertStateToData(data)
     const socket = socketGenerator.getInstance()
-    const status = socket.emitEvent("register", JSON.stringify(data))
+    socket.emitEvent("REGISTER", packet)
   }
 
   const onChangeText = (checker, index) => ({ nativeEvent }) => {

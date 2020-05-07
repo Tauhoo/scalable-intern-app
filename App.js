@@ -6,8 +6,7 @@ import KeyCancellator from "./components/KeyCancellator"
 import Modal from "./components/Modal"
 import { gray } from "./config/color"
 import Store from "./store"
-
-import socketGenerator from "./libs/socket"
+import NetworkManager from "./components/NetworkManager"
 
 export default function App() {
   const [keyBoardHeight, setKeyBoardHeight] = useState(0)
@@ -18,11 +17,6 @@ export default function App() {
   const keyboardHideHandler = (e) => {
     setKeyBoardHeight(0)
   }
-
-  useEffect(() => {
-    const socket = socketGenerator.getInstance()
-    return socket.destroy
-  })
 
   useEffect(() => {
     Keyboard.addListener("keyboardDidShow", keyboardShowHandler)
@@ -38,11 +32,13 @@ export default function App() {
     <Store>
       <KeyCancellator>
         <Modal>
-          <ScrollView style={mainStyle.container}>
-            <Navbar></Navbar>
-            <PageRouter></PageRouter>
-            <View style={mainStyle.keyBoard} />
-          </ScrollView>
+          <NetworkManager>
+            <ScrollView style={mainStyle.container}>
+              <Navbar></Navbar>
+              <PageRouter></PageRouter>
+              <View style={mainStyle.keyBoard} />
+            </ScrollView>
+          </NetworkManager>
         </Modal>
       </KeyCancellator>
     </Store>

@@ -17,7 +17,6 @@ export default ({ onChange, containerStyle, value }) => {
         mode='date'
         placeholder='select birthday'
         format='DD-MM-YYYY'
-        minDate='01-01-2016'
         maxDate={today}
         confirmBtnText='Confirm'
         cancelBtnText='Cancel'
