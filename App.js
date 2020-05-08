@@ -7,6 +7,7 @@ import Modal from "./components/Modal"
 import { gray } from "./config/color"
 import Store from "./store"
 import NetworkManager from "./components/NetworkManager"
+import NetworkStatusHeader from "./components/NetworkStatusHeader"
 
 export default function App() {
   const [keyBoardHeight, setKeyBoardHeight] = useState(0)
@@ -35,6 +36,7 @@ export default function App() {
           <NetworkManager>
             <ScrollView style={mainStyle.container}>
               <Navbar></Navbar>
+              <NetworkStatusHeader></NetworkStatusHeader>
               <PageRouter></PageRouter>
               <View style={mainStyle.keyBoard} />
             </ScrollView>

@@ -13,8 +13,6 @@ class Socket {
   }
 
   destroy = () => {
-    console.log("destroy")
-
     this.socket.removeAllListeners()
     this.socket.off()
     this.socket.disconnect()

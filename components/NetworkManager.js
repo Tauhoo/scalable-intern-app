@@ -11,33 +11,33 @@ import {
 
 const NetWorkManager = ({
   children,
-  networkReducer,
   setInternetConnectionState,
   setSocketConnectionState,
 }) => {
-  const { internetConnection, socketConnection } = networkReducer
-  console.log(internetConnection, socketConnection)
-
   useEffect(() => {
     const socket = socketGenerator.getInstance()
 
     socket.setOnConnect(() => {
       setSocketConnectionState(true)
+      console.log("status : " + true)
     })
 
     socket.setOnDisconnect(() => {
       setSocketConnection(false)
+      console.log("status : " + false)
     })
 
     return socket.destroy
   }, [])
 
+  const networkTrigger = ({ isConnected }) =>
+    setInternetConnectionState(isConnected)
+
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(({ isConnected }) => {
-      setInternetConnectionState(isConnected)
-    })
+    const unsubscribe = NetInfo.addEventListener(networkTrigger)
     return unsubscribe
   }, [])
+
   return <View style={styles.container}>{children}</View>
 }
 
