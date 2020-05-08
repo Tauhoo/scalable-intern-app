@@ -1,19 +1,11 @@
 import React, { useEffect } from "react"
 import { View, StyleSheet } from "react-native"
 import socketGenerator from "../libs/socket"
-import NetInfo from "@react-native-community/netinfo"
 
 import { connect } from "react-redux"
-import {
-  setInternetConnection,
-  setSocketConnection,
-} from "../store/actions/network"
+import { setSocketConnection } from "../store/actions/network"
 
-const NetWorkManager = ({
-  children,
-  setInternetConnectionState,
-  setSocketConnectionState,
-}) => {
+const NetWorkManager = ({ children, setSocketConnectionState }) => {
   useEffect(() => {
     const socket = socketGenerator.getInstance()
 
@@ -30,14 +22,6 @@ const NetWorkManager = ({
     return socket.destroy
   }, [])
 
-  const networkTrigger = ({ isConnected }) =>
-    setInternetConnectionState(isConnected)
-
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(networkTrigger)
-    return unsubscribe
-  }, [])
-
   return <View style={styles.container}>{children}</View>
 }
 
@@ -51,7 +35,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ networkReducer }) => ({ networkReducer })
 
 const mapDispatchToProps = (dispatch) => ({
-  setInternetConnectionState: (state) => dispatch(setInternetConnection(state)),
   setSocketConnectionState: (state) => dispatch(setSocketConnection(state)),
 })
 

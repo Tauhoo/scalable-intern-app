@@ -9,13 +9,16 @@ import {
 import closeLogo from "../assets/close.png"
 import Text from "./Text"
 
-export default ({ title, detail, index, id, onClose }) => {
+export default ({ title, detail, index, id, onClose, prefix }) => {
   const style = styles(index)
   return (
     <View style={style.background}>
       <View style={style.container}>
         <View style={style.header}>
-          <Text topic>{title}</Text>
+          <View style={style.titleContainer}>
+            {prefix}
+            <Text topic>{title}</Text>
+          </View>
           <TouchableWithoutFeedback onPress={() => onClose(id)}>
             <Image source={closeLogo} style={style.close} />
           </TouchableWithoutFeedback>
@@ -55,5 +58,10 @@ const styles = (index) =>
       padding: 10,
       borderRadius: 10,
       backgroundColor: "white",
+    },
+    titleContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "row",
     },
   })

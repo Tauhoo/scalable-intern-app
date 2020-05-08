@@ -21,7 +21,9 @@ import { connect } from "react-redux"
 
 import socketGenerator from "../../libs/socket"
 
-const Form = ({ data, updateField }) => {
+const Form = ({ data, updateField, network }) => {
+  const { socketConnection } = network
+
   const onSubmit = () => {
     const isValid = validateForm(data, updateField)
     if (!isValid) return
@@ -105,6 +107,7 @@ const Form = ({ data, updateField }) => {
         containerStyle={styles.textInput}
         onClick={onSubmit}
         title='submit'
+        disable={!socketConnection}
       ></Button>
       <Link src='index'>
         <Button
@@ -129,7 +132,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = ({ formReducer }) => ({ data: formReducer })
+const mapStateToProps = ({ formReducer, networkReducer }) => ({
+  data: formReducer,
+  network: networkReducer,
+})
 const mapDispatchToProps = (dispatch) => ({
   updateField: (key, load) => dispatch(setFormField(key, load)),
 })

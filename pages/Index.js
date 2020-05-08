@@ -6,7 +6,6 @@ import Container from "../components/Container"
 import Card from "../components/Card"
 import Text from "../components/Text"
 import test from "../assets/test.jpeg"
-
 export default () => (
   <Container>
     <Card>

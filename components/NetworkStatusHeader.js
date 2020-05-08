@@ -3,19 +3,11 @@ import { connect } from "react-redux"
 import { View, StyleSheet, Text } from "react-native"
 import { white } from "../config/color"
 
-const NetWorkStatusHeader = ({ socketConnection, internetConnection }) => {
-  if (!internetConnection) {
-    return (
-      <View style={styles.warning}>
-        <Text style={styles.text}>internet connection fail</Text>
-      </View>
-    )
-  }
-
+const NetWorkStatusHeader = ({ socketConnection }) => {
   if (!socketConnection) {
     return (
       <View style={styles.warning}>
-        <Text style={styles.text}>socket connecting</Text>
+        <Text style={styles.text}>socket is connecting ...</Text>
       </View>
     )
   }
