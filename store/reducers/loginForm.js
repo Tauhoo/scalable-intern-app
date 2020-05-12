@@ -8,9 +8,16 @@ const initailState = {
 export default (state = initailState, action) => {
   switch (action.type) {
     case "SET_EMAIL":
-      return { ...state, email: action.load }
+      let currentEmailState = { ...state }
+      currentEmailState.email = { ...currentEmailState.email, ...action.load }
+      return currentEmailState
     case "SET_PASSWORD":
-      return { ...state, password: action.load }
+      let currentPasswordState = { ...state }
+      currentPasswordState.password = {
+        ...currentPasswordState.password,
+        ...action.load,
+      }
+      return currentPasswordState
     default:
       return state
   }

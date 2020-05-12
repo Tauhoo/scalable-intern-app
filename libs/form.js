@@ -13,3 +13,10 @@ export const convertStateToData = (state) => {
   result.email = state.email.value
   return result
 }
+
+export const convertStateToLoginData = (state) => {
+  let result = {}
+  result.password = state.password.value
+  result.email = state.email.value
+  return result
+}
