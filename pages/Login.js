@@ -1,12 +1,12 @@
 import React from "react"
 import { View, Text } from "react-native"
 import Container from "../components/Container"
-import Form from "../components/RegisterForm"
+import LoginForm from "../components/LoginForm"
 
 export default () => {
   return (
     <Container>
-      <Form></Form>
+      <LoginForm></LoginForm>
     </Container>
   )
 }

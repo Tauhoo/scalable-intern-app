@@ -8,9 +8,12 @@ import Text from "../components/Text"
 import test from "../assets/test.jpeg"
 export default () => (
   <Container>
-    <Card>
+    <Card style={styles.card}>
       <Text style={styles.topic}>Free 13,000,000$</Text>
       <Image style={styles.image} source={test} resizeMode='contain' />
+      <Link src='login'>
+        <Button title='login' containerStyle={styles.push} />
+      </Link>
       <Link src='register'>
         <Button title='register' />
       </Link>
@@ -32,5 +35,8 @@ const styles = StyleSheet.create({
     width: fullWidth,
     marginBottom: 10,
     borderRadius: 10,
+  },
+  push: {
+    marginBottom: 10,
   },
 })

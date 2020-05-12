@@ -175,8 +175,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = ({ formReducer, networkReducer }) => ({
-  data: formReducer,
+const mapStateToProps = ({ registerFormReducer, networkReducer }) => ({
+  data: registerFormReducer,
   network: networkReducer,
 })
 const mapDispatchToProps = (dispatch) => ({

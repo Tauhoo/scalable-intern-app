@@ -1,12 +1,18 @@
 import React from "react"
 import { createStore, combineReducers } from "redux"
 import { Provider } from "react-redux"
-import { pagesReducer, formReducer, networkReducer } from "./reducers"
+import {
+  pagesReducer,
+  registerFormReducer,
+  networkReducer,
+  loginFormReducer,
+} from "./reducers"
 
 const rootReducer = combineReducers({
   pagesReducer,
-  formReducer,
+  registerFormReducer,
   networkReducer,
+  loginFormReducer,
 })
 const store = createStore(rootReducer)
 
