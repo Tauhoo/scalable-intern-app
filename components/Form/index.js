@@ -8,6 +8,9 @@ import {
   validateForm,
   incomeValidator,
   bankIdValidator,
+  emailValidator,
+  passwordValidator,
+  repasswordValidator,
 } from "./validator"
 import DateInput from "../DateInput"
 import OptionInput from "../OptionInput"
@@ -17,11 +20,12 @@ import { convertStateToData } from "../../libs/form"
 import { careers, bank } from "../../config/form"
 
 import { setFormField } from "../../store/actions/form"
+import { setCurrentPage } from "../../store/actions/pages"
 import { connect } from "react-redux"
 
 import socketGenerator from "../../libs/socket"
 
-const Form = ({ data, updateField, network }) => {
+const Form = ({ data, updateField, network, goto }) => {
   const { socketConnection } = network
 
   const onSubmit = () => {
@@ -30,6 +34,7 @@ const Form = ({ data, updateField, network }) => {
     const packet = convertStateToData(data)
     const socket = socketGenerator.getInstance()
     socket.emitEvent("REGISTER", packet)
+    goto()
   }
 
   const onChangeText = (checker, index) => ({ nativeEvent }) => {
@@ -46,6 +51,23 @@ const Form = ({ data, updateField, network }) => {
         value: text,
       })
     }
+  }
+
+  const onChangePassword = (repassword) => ({ nativeEvent }) => {
+    const { text } = nativeEvent
+    const passResult = passwordValidator(text)
+    updateField("password", {
+      isValid: passResult.isValid,
+      notificate: passResult.isValid ? "" : passResult.notificate,
+      value: text,
+    })
+    const repassResult = repasswordValidator({ value: text })(repassword.value)
+    console.log(repassResult)
+
+    updateField("repassword", {
+      isValid: repassResult.isValid,
+      notificate: repassResult.isValid ? "" : repassResult.notificate,
+    })
   }
 
   const onChangeDate = (data) => {
@@ -70,6 +92,27 @@ const Form = ({ data, updateField, network }) => {
         containerStyle={styles.textInput}
         onChange={onChangeText(nameValidator("lastname"), "lastname")}
         value={data.lastname}
+      ></TextInput>
+      <TextInput
+        placeholder='email'
+        containerStyle={styles.textInput}
+        onChange={onChangeText(emailValidator, "email")}
+        value={data.email}
+      ></TextInput>
+      <TextInput
+        placeholder='password'
+        containerStyle={styles.textInput}
+        onChange={onChangePassword(data.repassword)}
+        value={data.password}
+      ></TextInput>
+      <TextInput
+        placeholder='re-password'
+        containerStyle={styles.textInput}
+        onChange={onChangeText(
+          repasswordValidator(data.password),
+          "repassword"
+        )}
+        value={data.repassword}
       ></TextInput>
       <DateInput
         containerStyle={styles.textInput}
@@ -138,6 +181,7 @@ const mapStateToProps = ({ formReducer, networkReducer }) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   updateField: (key, load) => dispatch(setFormField(key, load)),
+  goto: () => dispatch(setCurrentPage("index")),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form)

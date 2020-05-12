@@ -1,6 +1,5 @@
 const initailState = {
   socketConnection: false,
-  internetConnection: false,
 }
 
 export default (state = initailState, action) => {

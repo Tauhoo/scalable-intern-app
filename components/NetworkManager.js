@@ -9,15 +9,9 @@ const NetWorkManager = ({ children, setSocketConnectionState }) => {
   useEffect(() => {
     const socket = socketGenerator.getInstance()
 
-    socket.setOnConnect(() => {
-      setSocketConnectionState(true)
-      console.log("status : " + true)
-    })
+    socket.setOnConnect(() => setSocketConnectionState(true))
 
-    socket.setOnDisconnect(() => {
-      setSocketConnection(false)
-      console.log("status : " + false)
-    })
+    socket.setOnDisconnect(() => setSocketConnectionState(false))
 
     return socket.destroy
   }, [])

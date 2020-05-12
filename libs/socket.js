@@ -29,6 +29,7 @@ class Socket {
   getConnectStatus = () => this.socket.connected
 
   onNotificateEvent = (data) => {
+    data = JSON.parse(data)
     Modal.popup(data)
   }
 

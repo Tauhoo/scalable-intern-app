@@ -3,6 +3,9 @@ import moment from "moment"
 const initailState = {
   firstname: { isValid: true, notificate: "", value: "" },
   lastname: { isValid: true, notificate: "", value: "" },
+  email: { isValid: true, notificate: "", value: "" },
+  password: { isValid: true, notificate: "", value: "" },
+  repassword: { isValid: true, notificate: "", value: "" },
   birtday: {
     isValid: true,
     notificate: "",

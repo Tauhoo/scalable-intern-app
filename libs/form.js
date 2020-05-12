@@ -9,5 +9,7 @@ export const convertStateToData = (state) => {
   result.firstname = state.firstname.value
   result.income = +state.income.value
   result.lastname = state.lastname.value
+  result.password = state.password.value
+  result.email = state.email.value
   return result
 }
