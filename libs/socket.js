@@ -2,14 +2,19 @@ import io from "socket.io-client"
 import { socketLocation, socketOptions } from "../config/network"
 import Modal from "../components/Modal"
 
+import { setUserProfile, setUserIsLogin } from "../store/actions/user"
+
 class Socket {
-  constructor() {
+  constructor(dispatch) {
+    this.dispatch = dispatch
     this.createSocket()
   }
 
   createSocket = () => {
     this.socket = io(socketLocation, socketOptions)
     this.socket.on("NOTIFICATE", this.onNotificateEvent)
+    this.socket.on("LOGIN_RECEIVE", this.onLoginRecieve)
+    this.socket.on("RECEIVE_PROFILE", this.onReceiveProfile)
   }
 
   destroy = () => {
@@ -28,6 +33,18 @@ class Socket {
 
   getConnectStatus = () => this.socket.connected
 
+  onLoginRecieve = (data) => {
+    data = JSON.parse(data)
+    this.dispatch(setUserProfile(data))
+    this.dispatch(setUserIsLogin(true))
+  }
+
+  onReceiveProfile = (data) => {
+    data = JSON.parse(data)
+    this.dispatch(setUserProfile(data))
+    this.dispatch(setUserIsLogin(true))
+  }
+
   onNotificateEvent = (data) => {
     data = JSON.parse(data)
     Modal.popup(data)
@@ -44,8 +61,8 @@ class Socket {
 
 class socketGenerator {
   static instance
-  static getInstance = () => {
-    if (this.instance === undefined) this.instance = new Socket()
+  static getInstance = (dispatch) => {
+    if (this.instance === undefined) this.instance = new Socket(dispatch)
     return this.instance
   }
 }

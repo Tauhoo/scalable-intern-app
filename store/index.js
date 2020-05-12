@@ -6,6 +6,7 @@ import {
   registerFormReducer,
   networkReducer,
   loginFormReducer,
+  userReducer,
 } from "./reducers"
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   registerFormReducer,
   networkReducer,
   loginFormReducer,
+  userReducer,
 })
 const store = createStore(rootReducer)
 

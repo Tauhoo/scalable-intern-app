@@ -11,8 +11,15 @@ import socketGenerator from "../../libs/socket"
 
 import { connect } from "react-redux"
 import { setEmail, setPassword } from "../../store/actions/loginForm"
+import { setCurrentPage } from "../../store/actions/pages"
 
-const LoginForm = ({ email, password, setPasswordState, setEmailState }) => {
+const LoginForm = ({
+  email,
+  password,
+  setPasswordState,
+  setEmailState,
+  goto,
+}) => {
   const onChange = (field) => ({ nativeEvent }) => {
     const { text } = nativeEvent
     if (field === "email") {
@@ -28,8 +35,8 @@ const LoginForm = ({ email, password, setPasswordState, setEmailState }) => {
     if (!isValid) return
     const packet = convertStateToLoginData(data)
     const socket = socketGenerator.getInstance()
-    socket.emitEvent("LOGING_IN", packet)
-    console.log(packet)
+    socket.emitEvent("LOGIN", packet)
+    goto()
   }
 
   return (
@@ -69,6 +76,7 @@ const mapStateToProps = ({ loginFormReducer }) => loginFormReducer
 const mapDispatchToProps = (dispatch) => ({
   setEmailState: (email) => dispatch(setEmail(email)),
   setPasswordState: (password) => dispatch(setPassword(password)),
+  goto: () => dispatch(setCurrentPage("index")),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

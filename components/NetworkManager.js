@@ -5,9 +5,9 @@ import socketGenerator from "../libs/socket"
 import { connect } from "react-redux"
 import { setSocketConnection } from "../store/actions/network"
 
-const NetWorkManager = ({ children, setSocketConnectionState }) => {
+const NetWorkManager = ({ children, setSocketConnectionState, dispatch }) => {
   useEffect(() => {
-    const socket = socketGenerator.getInstance()
+    const socket = socketGenerator.getInstance(dispatch)
 
     socket.setOnConnect(() => setSocketConnectionState(true))
 
@@ -30,6 +30,7 @@ const mapStateToProps = ({ networkReducer }) => ({ networkReducer })
 
 const mapDispatchToProps = (dispatch) => ({
   setSocketConnectionState: (state) => dispatch(setSocketConnection(state)),
+  dispatch,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NetWorkManager)
