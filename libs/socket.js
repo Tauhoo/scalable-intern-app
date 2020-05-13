@@ -2,7 +2,11 @@ import io from "socket.io-client"
 import { socketLocation, socketOptions } from "../config/network"
 import Modal from "../components/Modal"
 
-import { setUserProfile, setUserIsLogin } from "../store/actions/user"
+import {
+  setUserProfile,
+  setUserLoginState,
+  loginStates,
+} from "../store/actions/user"
 
 class Socket {
   constructor(dispatch) {
@@ -36,13 +40,13 @@ class Socket {
   onLoginRecieve = (data) => {
     data = JSON.parse(data)
     this.dispatch(setUserProfile(data))
-    this.dispatch(setUserIsLogin(true))
+    this.dispatch(setUserLoginState(loginStates.LOGINED))
   }
 
   onReceiveProfile = (data) => {
     data = JSON.parse(data)
     this.dispatch(setUserProfile(data))
-    this.dispatch(setUserIsLogin(true))
+    this.dispatch(setUserLoginState(loginStates.LOGINED))
   }
 
   onNotificateEvent = (data) => {

@@ -1,5 +1,3 @@
-import moment from "moment"
-
 const initailState = {
   email: { isValid: true, notificate: "", value: "" },
   password: { isValid: true, notificate: "", value: "" },

@@ -1,5 +1,6 @@
 import React from "react"
 import { StyleSheet, Image, Dimensions } from "react-native"
+import ProfileCard from "../components/ProfileCard"
 import Button from "../components/Button"
 import Link from "../components/Link"
 import Container from "../components/Container"
@@ -8,13 +9,15 @@ import Text from "../components/Text"
 import test from "../assets/test.jpeg"
 
 import { connect } from "react-redux"
+import { loginStates } from "../store/actions/user"
 
-const Index = ({ isLogin }) => (
+const Index = ({ loginState }) => (
   <Container>
+    <ProfileCard />
     <Card style={styles.card}>
       <Text style={styles.topic}>Free 13,000,000$</Text>
       <Image style={styles.image} source={test} resizeMode='contain' />
-      {isLogin ? null : (
+      {loginState === loginStates.NOT_LOGINED ? (
         <>
           <Link src='login'>
             <Button title='login' containerStyle={styles.push} />
@@ -23,7 +26,7 @@ const Index = ({ isLogin }) => (
             <Button title='register' />
           </Link>
         </>
-      )}
+      ) : null}
     </Card>
   </Container>
 )

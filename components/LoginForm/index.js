@@ -12,12 +12,14 @@ import socketGenerator from "../../libs/socket"
 import { connect } from "react-redux"
 import { setEmail, setPassword } from "../../store/actions/loginForm"
 import { setCurrentPage } from "../../store/actions/pages"
+import { setUserLoginState, loginStates } from "../../store/actions/user"
 
 const LoginForm = ({
   email,
   password,
   setPasswordState,
   setEmailState,
+  setLogingIn,
   goto,
 }) => {
   const onChange = (field) => ({ nativeEvent }) => {
@@ -36,6 +38,7 @@ const LoginForm = ({
     const packet = convertStateToLoginData(data)
     const socket = socketGenerator.getInstance()
     socket.emitEvent("LOGIN", packet)
+    setLogingIn()
     goto()
   }
 
@@ -77,6 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
   setEmailState: (email) => dispatch(setEmail(email)),
   setPasswordState: (password) => dispatch(setPassword(password)),
   goto: () => dispatch(setCurrentPage("index")),
+  setLogingIn: () => dispatch(setUserLoginState(loginStates.LOGING_IN)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

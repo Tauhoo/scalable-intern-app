@@ -1,6 +1,9 @@
+import { loginStates } from "../actions/user"
+
 const initailState = {
-  isLogin: false,
+  loginState: loginStates.NOT_LOGINED,
   profile: null,
+  profileLoading: false,
 }
 
 /*
@@ -18,7 +21,7 @@ const initailState = {
 export default (state = initailState, action) => {
   switch (action.type) {
     case "SET_USER_LOGIN":
-      return { ...state, isLogin: action.isLogin }
+      return { ...state, loginState: action.state }
     case "SET_USER_PROFILE":
       return { ...state, profile: action.load }
     default:
