@@ -11,25 +11,27 @@ import test from "../assets/test.jpeg"
 import { connect } from "react-redux"
 import { loginStates } from "../store/actions/user"
 
-const Index = ({ loginState }) => (
-  <Container>
-    <ProfileCard />
-    <Card style={styles.card}>
-      <Text style={styles.topic}>Free 13,000,000$</Text>
-      <Image style={styles.image} source={test} resizeMode='contain' />
-      {loginState === loginStates.NOT_LOGINED ? (
-        <>
-          <Link src='login'>
-            <Button title='login' containerStyle={styles.push} />
-          </Link>
-          <Link src='register'>
-            <Button title='register' />
-          </Link>
-        </>
-      ) : null}
-    </Card>
-  </Container>
-)
+const Index = ({ loginState }) => {
+  return (
+    <Container>
+      <ProfileCard />
+      <Card style={styles.card}>
+        <Text style={styles.topic}>Free 13,000,000$</Text>
+        <Image style={styles.image} source={test} resizeMode='contain' />
+        {loginState === loginStates.NOT_LOGINED ? (
+          <>
+            <Link src='login'>
+              <Button title='login' containerStyle={styles.push} />
+            </Link>
+            <Link src='register'>
+              <Button title='register' />
+            </Link>
+          </>
+        ) : null}
+      </Card>
+    </Container>
+  )
+}
 
 const mapStateToProps = ({ userReducer }) => userReducer
 const mapDispatchToProps = () => ({})
